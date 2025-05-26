@@ -7,8 +7,95 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>\
 <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <section id="loading-skeleton" class="overflow-hidden bg-base-100 flex items-center justify-center z-10 h-screen">
+
+      <section data-section-url="/Configurar/loader.html" class="loader-section">
+          <div id="logo" class="logo-container">
+            <div class="flex flex-col sm:flex-row items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 p-4">
+              <video src="img/Az software (1).mp4" alt="Loading" class="w-32 h-auto sm:w-48 sm:h-auto md:w-64 md:h-auto lg:w-80 lg:h-auto"> <!-- Ajuste de tamaño para diferentes pantallas -->
+              <h2 class="ml-0 mt-4 sm:mt-0 sm:ml-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black">Doble U</h2> <!-- Texto responsive -->
+          </div>
+          
+          </div>
+  
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+          <script>
+            // Configuración básica de la escena, cámara y renderizador
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio / 2); // Reducir la resolución en dispositivos de gama baja
+            renderer.setClearColor(0xffffff, 1); // Fondo blanco
+            document.querySelector('.loader-section').appendChild(renderer.domElement);
+
+            // Crear estrellas negras con geometría más simple
+            const starGeometry = new THREE.SphereGeometry(0.3, 8, 8); // Menos segmentos para simplificar la geometría
+            const starMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Estrellas en negro
+            
+            for (let i = 0; i < 500; i++) { // Reducir el número de estrellas
+                const star = new THREE.Mesh(starGeometry, starMaterial);
+                star.position.x = (Math.random() - 0.5) * 200;
+                star.position.y = (Math.random() - 0.5) * 200;
+                star.position.z = (Math.random() - 0.5) * 1000; // Incrementar la profundidad de las estrellas
+                scene.add(star);
+            }
+
+            // Variables para animar la cámara
+            let speed = 0.2; // Reducir la velocidad de la animación
+            let direction = { x: (Math.random() - 0.5) * speed, y: (Math.random() - 0.5) * speed, z: (Math.random() - 0.5) * speed };
+
+            // Función para cambiar la dirección de la cámara aleatoriamente
+            function changeDirection() {
+                direction.x = (Math.random() - 0.5) * speed;
+                direction.y = (Math.random() - 0.5) * speed;
+                direction.z = (Math.random() - 0.5) * speed;
+            }
+
+            // Cambiar dirección cada 2 segundos
+            setInterval(changeDirection, 2000);
+
+            // Animación del fondo de estrellas y movimiento de la cámara
+            function animate() {
+                requestAnimationFrame(animate);
+
+                scene.children.forEach(child => {
+                    child.position.z += 0.2; // Reducir la velocidad de reciclaje de estrellas
+                    if (child.position.z > 1000) child.position.z -= 1500; // Reciclar estrellas con mayor distancia
+                });
+
+                camera.position.x += direction.x;
+                camera.position.y += direction.y;
+                camera.position.z += direction.z;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            camera.position.z = 15;
+
+            // Ajustar el tamaño del canvas al redimensionar la ventana
+            window.addEventListener('resize', () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+        </script>
+      </section>
+
+  
+</section>
     
 </body>
 </html>
