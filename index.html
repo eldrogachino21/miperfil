@@ -102,9 +102,20 @@
             });
         </script>
       </section>
+<section id="main" class="hidden">
 
+</section>
   
 </section>
-    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Esperar 2 segundos antes de mostrar el contenido (delay)
+      setTimeout(() => {
+       
+        document.getElementById("main").classList.remove("hidden");
+        document.getElementById("loading-skeleton").classList.add("hidden");
+      }, 2000); // 2000 milisegundos = 2 segundos
+    });
+  </script>
 </body>
 </html>
