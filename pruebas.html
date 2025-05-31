@@ -25,16 +25,20 @@
       document.getElementById('texto-original').innerText = texto;
 
       // Traducción con LibreTranslate
-      const res = await fetch('"https://es.libretranslate.com/translate"', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        const res = await fetch("https://es.libretranslate.com/translate", {
+        method: "POST",
         body: JSON.stringify({
-          q: texto,
-          source: "es",
-          target: "en",
-          format: "text"
-        })
-      });
+            q: texto,
+            source: "auto",
+            target: "es",
+            format: "text",
+            alternatives: 3,
+            api_key: ""
+        }),
+        headers: { "Content-Type": "application/json" }
+    });
+
+    console.log(await res.json());
 
       const data = await res.json();
       const traduccion = data.translatedText;
