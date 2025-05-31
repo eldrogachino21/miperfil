@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi perfil </title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>\
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,16 +101,157 @@
                 camera.updateProjectionMatrix();
             });
         </script>
-      </section>
-<section id="main" class="hidden">
+      </section></section>
+<section id="main" class="hidden flex flex-col items-center justify-center bg-base-300 p-6">
+ <style>
+  .card {
+    perspective: 1000px;
+  }
+  .card-inner {
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+    border-radius: 1rem;
+    position: relative;
+    background: linear-gradient(135deg, #0ff, #08f);
+    box-shadow: 0 0 15px #0ff, 0 0 30px #08f;
+    overflow: hidden;
+  }
 
-</section>
-  <div class="avatar">
-  <div class="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-    <img src="img/1745703818578.jpeg" />
+  /* Efecto holográfico: capa de brillo animada */
+  .holo-shine {
+    pointer-events: none;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%);
+    transform: rotate(25deg);
+    animation: shineMove 3s linear infinite;
+    mix-blend-mode: screen;
+    border-radius: 1rem;
+  }
+
+  @keyframes shineMove {
+    0% {
+      transform: translateX(-100%) rotate(25deg);
+    }
+    100% {
+      transform: translateX(100%) rotate(25deg);
+    }
+  }
+
+  /* Profundidad del contenido */
+  .card-content {
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    user-select: none;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 3px solid #0ff;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    box-shadow: 0 0 10px #0ff;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #0ff;
+    color: #001f3f;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    margin-left: 0.5rem;
+    box-shadow: 0 0 10px #0ff;
+    font-size: 0.75rem;
+  }
+</style>
+<div class="card w-80" id="card">
+  <div class="card-inner p-6">
+    <div class="holo-shine"></div>
+    <div class="card-content">
+      <img
+        src="img/1745703818578.jpeg"
+        alt="Avatar"
+        class="avatar"
+      />
+      <div class="flex justify-center items-center mb-2">
+        <h2 class="text-2xl font-bold">Alejandro yan zhou bernabe</h2>
+        
+      </div>
+      
+      <p class="text-lg font-medium">Ingeniero en Computacion</p>
+        <span class="badge mt-5">Disponible</span>
+        <div class="flex justify-center items-center">
+
+        </div>
   </div>
+
+  <div class="w-64 h-24 p-4 flex items-center justify-center">
+  <svg
+    class="w-full h-full"
+    viewBox="0 0 120 40"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Sin fondo: no hay rectángulo de fondo -->
+    <!-- Barras negras -->
+    <rect x="5" y="5" width="3" height="30" fill="black" />
+    <rect x="12" y="5" width="1.5" height="30" fill="black" />
+    <rect x="16" y="5" width="4" height="30" fill="black" />
+    <rect x="23" y="5" width="2" height="30" fill="black" />
+    <rect x="28" y="5" width="1" height="30" fill="black" />
+    <rect x="32" y="5" width="3" height="30" fill="black" />
+    <rect x="38" y="5" width="2" height="30" fill="black" />
+    <rect x="43" y="5" width="4" height="30" fill="black" />
+    <rect x="50" y="5" width="1.5" height="30" fill="black" />
+    <rect x="55" y="5" width="3" height="30" fill="black" />
+    <rect x="61" y="5" width="2" height="30" fill="black" />
+    <rect x="66" y="5" width="1" height="30" fill="black" />
+    <rect x="70" y="5" width="4" height="30" fill="black" />
+    <rect x="77" y="5" width="2" height="30" fill="black" />
+    <rect x="82" y="5" width="3" height="30" fill="black" />
+    <rect x="88" y="5" width="1.5" height="30" fill="black" />
+    <rect x="92" y="5" width="4" height="30" fill="black" />
+    <rect x="99" y="5" width="2" height="30" fill="black" />
+    <rect x="104" y="5" width="1" height="30" fill="black" />
+    <rect x="108" y="5" width="3" height="30" fill="black" />
+  </svg>
 </div>
+
+</div>
+
+<script>
+  const card = document.querySelector('#card');
+  const cardInner = card.querySelector('.card-inner');
+
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left; // posición X dentro de la tarjeta
+    const y = e.clientY - rect.top;  // posición Y dentro de la tarjeta
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * 10; // rota máximo 10 grados
+    const rotateY = ((centerX - x) / centerX) * 10;
+
+    cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    cardInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  });
+</script>
 </section>
+
+
     <script>
     document.addEventListener("DOMContentLoaded", () => {
       // Esperar 2 segundos antes de mostrar el contenido (delay)

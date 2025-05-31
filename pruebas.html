@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Traductor de Voz en Tiempo Real</title>
+</head>
+<body>
+  <h2>🎙 Traductor de Voz (Español → Inglés)</h2>
+  <button onclick="iniciarReconocimiento()">Hablar</button>
+  <p><strong>Texto original:</strong> <span id="texto-original"></span></p>
+  <p><strong>Traducción:</strong> <span id="traduccion"></span></p>
+
+  <script>
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'es-ES';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    function iniciarReconocimiento() {
+      recognition.start();
+    }
+
+    recognition.onresult = async function(event) {
+      const texto = event.results[0][0].transcript;
+      document.getElementById('texto-original').innerText = texto;
+
+      // Traducción con LibreTranslate
+      const res = await fetch('https://libretranslate.de/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          q: texto,
+          source: "es",
+          target: "en",
+          format: "text"
+        })
+      });
+
+      const data = await res.json();
+      const traduccion = data.translatedText;
+      document.getElementById('traduccion').innerText = traduccion;
+
+      // Leer traducción en voz alta
+      const speech = new SpeechSynthesisUtterance(traduccion);
+      speech.lang = 'en-US';
+      speechSynthesis.speak(speech);
+    };
+
+    recognition.onerror = function(event) {
+      alert('Error al reconocer la voz: ' + event.error);
+    };
+  </script>
+</body>
+</html>
