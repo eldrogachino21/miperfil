@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>CV Alejandro Zhou</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arimo', sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    #cv {
+      background: white;
+      padding: 20px;
+      margin: auto;
+      width: 800px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .title {
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 2px solid #393e46;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="cv">
+  <!-- Contenido del currículum -->
+  <div style="text-align:center;">
+    <h2>Alejandro Zhou, Desarrollador de software</h2>
+    <p>Zapopan, Jal, 45027, México</p>
+    <p>+52 3335598342 | alejandroyanzhoubernabe@gmail.com</p>
+  </div>
+
+  <div class="section">
+    <div class="title">Resumen</div>
+    <p>Proactivo Desarrollador de software con más de 2 años de experiencia en la creación de sistemas empresariales, incluyendo POS, ERP y ecommerce, utilizando tecnologías como PHP, .NET y JavaScript. Se ha destacado en el desarrollo de un sistema POS y en la capacitación del personal para optimizar procesos. Capacidad para implementar funcionalidades críticas y ofrecer soporte técnico efectivo. Posibilidad de aportar soluciones innovadoras y eficientes a las necesidades de la empresa.</p>
+  </div>
+
+  <div class="section">
+    <div class="title">Experiencia laboral</div>
+    <p><strong>06/2024 – 05/2025</strong> – Desarrollador Freelance, Lonchecitos Martha – Guadalajara</p>
+    <ul>
+      <li>Desarrollé un sistema POS en C# .NET Windows Forms y capacité al personal en su uso.</li>
+    </ul>
+    <p><strong>11/2021 – 06/2022</strong> – Desarrollador Jr, Fives Consulting – Guadalajara</p>
+    <ul>
+      <li>Desarrollé soluciones empresariales con PHP, .NET y JavaScript.</li>
+      <li>Implementé mapas, control de roles, y trabajé con APIs RESTful.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="title">Educación</div>
+    <p><strong>01/2018 – 12/2022</strong> – Universidad de Especialidades – Guadalajara</p>
+    <p>Licenciatura en Ingeniería en Computación</p>
+    <ul>
+      <li>Desarrollé habilidades en programación, machine learning y desarrollo web.</li>
+      <li>Destacado en proyectos con aprendizaje automático, bases de datos e interfaces.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="title">Conocimientos</div>
+    <p>Java, C#, Python (Machine Learning), Git, JavaScript, Windows Server, Linux, Firebase, SQL Server</p>
+    <p>Proactivo, Puntual, Responsable, Autodidacta</p>
+  </div>
+
+  <div class="section">
+    <div class="title">Idiomas</div>
+    <p>Español (lengua materna), Inglés (básico)</p>
+  </div>
+
+  <div class="section">
+    <div class="title">Referencias</div>
+    <p>Raúl López – Cliente – +52 3331407549</p>
+    <p>Eduardo Chávez – Patrón, Lonchecitos Martha – +52 3331676661</p>
+  </div>
+</div>
+
+<button onclick="descargarPDF()">Descargar PDF</button>
+
+<script>
+  function descargarPDF() {
+    const element = document.getElementById('cv');
+    html2pdf().set({
+      margin: 0,
+      filename: 'CV_Alejandro_Zhou.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    }).from(element).save();
+  }
+</script>
+
+</body>
+</html>
